@@ -28,7 +28,7 @@ async function req<T>(
   return res.json() as Promise<T>;
 }
 
-// Fetch unread message IDs — up to 4 pages (200 messages).
+// Fetch unread message IDs — up to 10 pages (1000 messages).
 export async function listUnreadMessages(
   token: string
 ): Promise<Array<{ id: string; threadId: string }>> {
@@ -39,7 +39,7 @@ export async function listUnreadMessages(
   do {
     const params = new URLSearchParams({
       q: 'is:unread in:inbox',
-      maxResults: '50',
+      maxResults: '100',
     });
     if (pageToken) params.set('pageToken', pageToken);
 
@@ -47,7 +47,7 @@ export async function listUnreadMessages(
     if (data.messages) allMessages.push(...data.messages);
     pageToken = data.nextPageToken;
     pages++;
-  } while (pageToken && pages < 4);
+  } while (pageToken && pages < 10);
 
   return allMessages;
 }
