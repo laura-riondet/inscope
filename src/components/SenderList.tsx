@@ -92,6 +92,7 @@ interface SenderListProps {
   senders: Sender[];
   loading: boolean;
   error: string | null;
+  cleanedToday: number;
   onOpenSender: (sender: Sender) => void;
   onDeleteSender: (email: string) => void;
   onRetry: () => void;
@@ -101,6 +102,7 @@ export function SenderList({
   senders,
   loading,
   error,
+  cleanedToday,
   onOpenSender,
   onDeleteSender,
   onRetry,
@@ -149,6 +151,13 @@ export function SenderList({
                 </>
               )}
             </p>
+            {cleanedToday > 0 && (
+              <div className="cleaned-pill" key={cleanedToday} aria-live="polite">
+                <span className="cleaned-check" aria-hidden="true">✓</span>
+                <span className="cleaned-count mono">{cleanedToday.toLocaleString()}</span>
+                <span className="cleaned-label"> cleaned today</span>
+              </div>
+            )}
             <div className="filter-wrap">
               <input
                 type="text"

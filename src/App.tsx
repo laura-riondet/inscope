@@ -12,6 +12,8 @@ export function App() {
   const { senders, syncState, error: gmailError, sync, updateSender } = useGmail(token);
   const [currentSenderEmail, setCurrentSenderEmail] = useState<string | null>(null);
   const [signingOut, setSigningOut] = useState(false);
+  const [listScrollY, setListScrollY] = useState(0);
+  const [cleanedToday, setCleanedToday] = useState(0);
 
   const signedIn = !!account && !!token;
 
@@ -32,12 +34,26 @@ export function App() {
   }
 
   function openSender(sender: Sender) {
+    setListScrollY(window.scrollY);
     setCurrentSenderEmail(sender.email);
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
   function closeSender() {
     setCurrentSenderEmail(null);
+    requestAnimationFrame(() => window.scrollTo({ top: listScrollY, behavior: 'instant' }));
+  }
+
+  function handleUpdate(email: string, patch: Partial<Sender> | null) {
+    const sender = senders.find((s) => s.email === email);
+    if (sender) {
+      if (patch === null) {
+        setCleanedToday((prev) => prev + sender.count);
+      } else if (patch.count !== undefined && patch.count < sender.count) {
+        setCleanedToday((prev) => prev + (sender.count - patch.count!));
+      }
+    }
+    updateSender(email, patch);
   }
 
   const currentSender = senders.find((s) => s.email === currentSenderEmail) ?? null;
@@ -64,8 +80,9 @@ export function App() {
                 senders={senders}
                 loading={isLoading}
                 error={gmailError}
+                cleanedToday={cleanedToday}
                 onOpenSender={openSender}
-                onDeleteSender={(email) => updateSender(email, null)}
+                onDeleteSender={(email) => handleUpdate(email, null)}
                 onRetry={sync}
               />
             </div>
@@ -76,7 +93,7 @@ export function App() {
                   sender={currentSender}
                   token={token}
                   onBack={closeSender}
-                  onUpdate={updateSender}
+                  onUpdate={handleUpdate}
                 />
               </div>
             )}

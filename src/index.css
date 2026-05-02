@@ -372,10 +372,48 @@ button:disabled { cursor: not-allowed; }
   color: var(--ink);
 }
 .page-subtitle {
-  margin: 0 0 18px 0;
+  margin: 0 0 10px 0;
   font-size: 13px;
   color: var(--muted);
 }
+
+/* ---------- Cleaned today pill ---------- */
+.cleaned-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #D6F0E0;
+  color: #1A5C35;
+  border: 1px solid #A8DFC0;
+  border-radius: 20px;
+  padding: 3px 11px 3px 9px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  animation: cleanedBump 500ms var(--ease) both;
+  transform-origin: left center;
+}
+.cleaned-check {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1A8C4A;
+}
+.cleaned-count {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.cleaned-label {
+  font-size: 12px;
+  opacity: 0.85;
+}
+@keyframes cleanedBump {
+  0%   { transform: scale(0.8) translateY(2px); opacity: 0; }
+  55%  { transform: scale(1.07) translateY(0); opacity: 1; }
+  80%  { transform: scale(0.97); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 .filter-wrap {
   margin-top: 2px;
 }
