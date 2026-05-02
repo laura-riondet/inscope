@@ -25,6 +25,9 @@ dist-ssr/
 .DS_Store
 Thumbs.db
 
+# Design handoff reference (not production code)
+design_handoff_inscope/
+
 # Logs
 npm-debug.log*
 yarn-debug.log*

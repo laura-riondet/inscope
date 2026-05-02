@@ -33,6 +33,7 @@ export function App() {
 
   function openSender(sender: Sender) {
     setCurrentSenderEmail(sender.email);
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
   function closeSender() {
