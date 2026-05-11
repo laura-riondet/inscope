@@ -34,8 +34,11 @@ export function AuthScreen({ onSignIn, isSigningIn, error }: AuthScreenProps) {
         )}
 
         <ul className="auth-trust">
-          <li>No backend. Your data never leaves this browser.</li>
-          <li>Open source. Read the code.</li>
+          <li style={{ marginBottom: '0.5rem' }}>Privacy-focused, your data is local on this device.</li>
+
+        </ul>
+        <ul className="auth-trust">
+
           <li>Free. Always.</li>
         </ul>
       </div>
